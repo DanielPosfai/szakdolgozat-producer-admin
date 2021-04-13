@@ -1,0 +1,73 @@
+<div class="container d-flex align-items-center">
+     <h1>Rendelés részleteinek módosítása</h1>   
+</div>
+   
+<div class="container" *ngIf="form">
+     <div class="col-8">
+          <form [formGroup]="form">
+
+               <div class="form-group">
+                    <label for="productid">Termék ID</label>
+                    <input type="text" class="form-control" formControlName="productid" placeholder="Termék ID"
+                         [ngClass]="{ 'is-invalid': form.get('productid').touched && form.get('productid').errors }">
+                    <div *ngIf="form.get('productid').touched">
+                         <mat-error *ngIf="form.get('productid').hasError('required')">Termék ID mező kitöltése kötelező!</mat-error>
+                    </div>
+               </div>
+
+               <div class="form-group">
+                    <label for="productname">Termék név</label>
+                    <input type="text" class="form-control" formControlName="productname" placeholder="Termék név"
+                         [ngClass]="{ 'is-invalid': form.get('productname').touched && form.get('productname').errors }">
+                    <div *ngIf="form.get('productname').touched && form.get('productname').errors">
+                         <p *ngIf="form.get('productname').hasError('required')">Termék név mező kitöltése kötelező!</p>
+                    </div>
+               </div>
+
+               <div class="form-group">
+                    <label for="unit">Mértékegység</label>
+                    <select class="form-control" formControlName="unit" placeholder="Mértékegység">
+                         <option>Kg</option>
+                         <option>g</option>
+                         <option>L</option>
+                         <option>Dl</option>
+                         <option>Db</option>
+                    </select>
+               </div>
+
+               <div class="form-group">
+                    <label for="unitprice">Egységár</label>
+                    <input type="text" class="form-control" formControlName="unitprice" placeholder="Egységár"
+                         [ngClass]="{ 'is-invalid': form.get('unitprice').touched && form.get('unitprice').errors }">
+                    <div *ngIf="form.get('unitprice').touched && form.get('unitprice').errors">
+                         <p *ngIf="form.get('unitprice').hasError('required')">Egységár mező kitöltése kötelező!</p>
+                          
+                    </div>
+               </div>
+
+               <div class="form-group">
+                    <label for="quantity">Mennyiség</label>
+                    <input type="text" class="form-control" formControlName="quantity" placeholder="Mennyiség"
+                         [ngClass]="{ 'is-invalid': form.get('quantity').touched && form.get('quantity').errors }">
+                    <div *ngIf="form.get('quantity').touched && form.get('quantity').errors">
+                         <p *ngIf="form.get('quantity').hasError('required')">Mennyiség mező kitöltése kötelező!</p>
+                    </div>
+               </div>
+
+               <div class="form-group">
+                    <label for="status">Státusz</label>
+                    <select class="form-control" formControlName="status" placeholder="Státusz">
+                         <option>Folyamatban</option>
+                         <option>Elkészült</option>
+                    </select>
+               </div>
+              
+          </form>
+          <div class="wrapper">
+               <button class="btn" (click)="onSubmit()">
+                    Módosítás
+               </button>
+          </div>
+
+     </div>
+</div>

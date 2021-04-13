@@ -1,0 +1,71 @@
+<div class="container d-flex align-items-center">
+     <h1>Termék hozzáadása</h1>   
+</div>
+   
+<div class="container" *ngIf="form">
+     <div class="col-8">
+          <form [formGroup]="form">
+
+               <div class="form-group">
+                    <label for="productname">Termék név</label>
+                    <input type="text" class="form-control" formControlName="productname" placeholder="Termék név"
+                         [ngClass]="{ 'is-invalid': form.get('productname').touched && form.get('productname').errors }">
+                    <div *ngIf="form.get('productname').touched">
+                         <mat-error *ngIf="form.get('productname').hasError('required')">Termék név mező kitöltése kötelező!</mat-error>
+                    </div>
+               </div>
+
+               <div class="form-group">
+                    <label for="unit">Mértékegység</label>
+                    <input type="text" class="form-control" formControlName="unit" placeholder="Mértékegység"
+                         [ngClass]="{ 'is-invalid': form.get('unit').touched && form.get('unit').errors }">
+                    <div *ngIf="form.get('unit').touched && form.get('unit').errors">
+                         <p *ngIf="form.get('unit').hasError('required')">Mértékegység mező kitöltése kötelező!</p>
+                    </div>
+               </div>
+
+               <div class="form-group">
+                    <label for="price">Egységár</label>
+                    <input type="number" class="form-control" formControlName="userName" placeholder="Egységár"
+                         [ngClass]="{ 'is-invalid': form.get('price').touched && form.get('price').errors }">
+                    <div *ngIf="form.get('price').touched && form.get('price').errors">
+                         <p *ngIf="form.get('price').hasError('required')">Egységár mező kitöltése kötelező!</p>
+                    </div>
+               </div>
+
+               <div class="form-group">
+                    <label for="category">Kategória</label>
+                    <input type="text" class="form-control" formControlName="email" placeholder="Kategória"
+                         [ngClass]="{ 'is-invalid': form.get('category').touched && form.get('category').errors }">
+                    <div *ngIf="form.get('category').touched && form.get('category').errors">
+                         <p *ngIf="form.get('category').hasError('required')">Kategória mező kitöltése kötelező!</p>
+                    </div>
+               </div>
+
+               <div class="form-group">
+                    <label for="details">Leírás</label>
+                    <input type="text" [value]="customer.phonenumber" class="form-control" formControlName="details" placeholder="Leírás"
+                         [ngClass]="{ 'is-invalid': form.get('details').touched && form.get('details').errors }">
+                    <div *ngIf="form.get('details').touched && form.get('details').errors" class="invalid-feedback">
+                         <p *ngIf="form.get('details').hasError('required')">Leírás mező kitöltése kötelező!</p>
+                    </div>
+               </div>
+
+               <div class="form-group">
+                    <label for="image">Kép feltöltés</label>
+                    <input  type="password" class="form-control" formControlName="password" placeholder=" "
+                    [ngClass]="{ 'border-danger': form.get('image').touched && form.get('image').errors }">
+                    <div *ngIf=" form.get('image').touched && form.get('image').errors">
+                         <p>Kép feltöltése kötelező!</p>
+                    </div>
+               </div>
+              
+          </form>
+          <div class="wrapper">
+               <button class="btn" (click)="onSubmit()">
+                    Hozzáadás
+               </button>
+          </div>
+
+     </div>
+</div>

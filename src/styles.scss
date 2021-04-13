@@ -1,0 +1,80 @@
+@import '~bootstrap/scss/bootstrap';
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
+:root {
+  --green: #28a745;
+  --darkgreen: #227235;
+}
+
+h1 {
+  padding: 0.5rem;
+  color:black!important;
+}
+
+.btn {
+  background: var(--green)!important;
+  color: #ffffff!important;
+
+  &:hover {
+    background-color: var(--darkgreen);
+    color: #ffffff !important;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  &:disabled {
+    cursor: no-drop;
+  }
+
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.deleteButton {
+  color: #000000 !important;
+  background-color: #ffffff;
+  border-color: #000000;
+
+  &:hover {
+    background-color: #ffffff !important;
+    border-color: #ff0000;
+    color: #ff0000 !important;
+  }
+}
+
+.snackbar-color {
+  background: #ffffff;
+  border: 3px solid var(--green);
+  color: var(--green);
+}
+mat-drawer-container{
+  min-height: 500px; 
+  mat-drawer {
+    border-right: 3px solid var(--green)!important;
+    span {
+      color: #000000 !important;
+    }
+  }
+  
+}
+.defaultStyle{
+  .mat-cell, .mat-header-cell{
+    border-bottom: 1px solid black;
+    text-align: center !important;
+  }
+}
+
+
+
+
+
+
+
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

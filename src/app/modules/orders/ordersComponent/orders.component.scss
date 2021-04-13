@@ -1,0 +1,13 @@
+.list{
+    border:1px solid var(--green);
+    padding: 0;
+    img{
+        max-height: 130px;
+    }
+    mat-paginator{
+       // background-color: var(--green);
+    }
+}
+button{
+    height: 50%;
+}  

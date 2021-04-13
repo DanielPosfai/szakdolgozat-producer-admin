@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    justify-content: center;
+
+    .wrapper {
+        display: flex;
+        justify-content: center;
+
+        .box {
+            margin-right: 10px;
+        }
+
+        button {
+            margin: 5px;
+            background: var(--green);
+            color: #ffffff;
+            &:hover {
+                background-color: var(--darkgreen);
+                
+            }
+            &:focus {
+                border-color: var(--green);
+                box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px var(--green);
+            }
+        }
+    }
+}
