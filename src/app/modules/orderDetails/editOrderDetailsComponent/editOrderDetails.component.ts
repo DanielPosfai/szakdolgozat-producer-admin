@@ -19,25 +19,29 @@ export class EditOrderDetailsComponent implements OnInit {
     public orderDetailId = 'id';
     public id = this.route.snapshot.params[this.orderDetailId];
 
-    constructor(private service: EditOrderDetailsService, private router: Router, private route: ActivatedRoute) { }
+    constructor(
+        private service: EditOrderDetailsService,
+        private router: Router,
+        private route: ActivatedRoute
+    ) { }
 
-    ngOnInit() {
-        
-        this.getSingleOrderDetail();
+    ngOnInit(): void{
+        if (this.isAuthenticated) {
+            this.getSingleOrderDetail();
+        } else {
+            this.router.navigate(['/login']);
+        }
     }
 
     initForm(): void {
         this.form = new FormGroup({
             productid: new FormControl(this.orderDetail.productid, [
-                Validators.required
             ]),
             productname: new FormControl(this.orderDetail.productname, [
-                Validators.required
             ]),
             unit: new FormControl(this.orderDetail.unittype, [
             ]),
             unitprice: new FormControl(this.orderDetail.unitprice, [
-                Validators.required,
             ]),
             quantity: new FormControl(this.orderDetail.quantity, [
                 Validators.required,
@@ -58,7 +62,7 @@ export class EditOrderDetailsComponent implements OnInit {
             }
         });
     }
-   
+
     onSubmit() {
 
         if (this.form.invalid) {
@@ -71,24 +75,15 @@ export class EditOrderDetailsComponent implements OnInit {
         newOrderDetail.unitprice = this.form.get("unitprice").value;
         newOrderDetail.quantity = this.form.get("quantity").value;
         newOrderDetail.status = this.form.get("status").value;
-        
-
-       //  newUser.lastname = this.form.get("lastName").value;
-        
 
         this.service.editOrderDetail(newOrderDetail, this.id).subscribe({
             next: response => {
 
-                if (response == 'not exists') {
-                    alert("Product does not exists with this id");
-                    return;
-
-                }
                 if (response == 'email already exists') {
                     alert("email alredy exist");
                     return;
                 }
-                this.router.navigate(['/orderDetails/list/'+this.orderDetail.orderid]);
+                this.router.navigate(['/orderDetails/list/' + this.orderDetail.orderid]);
             },
             error: err => {
                 alert(err);

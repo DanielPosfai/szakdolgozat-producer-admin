@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class EditOrderDetailsService {
 
-  private editOrderDetailsUrl = 'http://localhost:8080/api/auth/editOrderDetails/';
-  private getOrderDetailUrl = 'http://localhost:8080/api/auth/orderDetail/';
+  private editOrderDetailsUrl = 'http://localhost:8080/api/admin/editOrderDetails/';
+  private getOrderDetailUrl = 'http://localhost:8080/api/admin/orderDetail/';
 
   constructor(private httpClient: HttpClient) { }
 

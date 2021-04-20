@@ -10,11 +10,11 @@ const routes: Routes = [
   {
     path: '', component: LayoutComponent, children: [
       { path: 'items', loadChildren: () => import('@app/modules/items/items.module').then(m => m.ItemsModule)},
-      { path: 'orders', loadChildren: () => import('@app/modules/orders/orders.module').then(m => m.OrdersModule)},
       { path: 'orderDetails', loadChildren: () => import('@app/modules/orderDetails/orderDetails.module').then(m => m.OrderDetailsModule)}
     ]
   },
   { path: 'login', redirectTo: 'login' },
+  { path: 'signup', redirectTo: 'signup' },
   { path: '**', redirectTo: 'pagenotfound' }
 ];
 
