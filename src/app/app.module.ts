@@ -7,6 +7,7 @@ import { AppComponent } from '@app/app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthenticationInterceptor } from './authentication.interceptor';
 import { LoginModule } from './modules/login/login.module';
+import { SignUpModule } from './modules/signup/signup.module';
 import { LayoutModule } from './shared/layout/layout.module';
 
 
@@ -21,6 +22,7 @@ import { LayoutModule } from './shared/layout/layout.module';
     AppRoutingModule,
     LayoutModule.forRoot(),
     LoginModule,
+    SignUpModule,
     NgbModule,
     HttpClientModule,
     BrowserAnimationsModule

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { UserInfo } from '@app/shared/models/userInfo.model';
 import { AuthUtil } from '@app/shared/utils/authorizationCheck.util';
-import { StateService } from '@app/shared/utils/state.service';
 import { LoginService } from './login.service';
 
 
@@ -15,7 +15,11 @@ export class LoginComponent implements OnInit {
 
   public isAuthenticated = AuthUtil.checkAuthorization();
   public tempUser = new UserInfo;
-  constructor(private service: LoginService, private router: Router, private stateService: StateService) { }
+  constructor(
+    private service: LoginService,
+     private router: Router,
+     private snackBar: MatSnackBar
+     ) { }
 
   ngOnInit() {
     
@@ -29,20 +33,28 @@ export class LoginComponent implements OnInit {
 
     this.service.login(username, password).subscribe({
       next: response => {
-      sessionStorage.setItem('userInfo', JSON.stringify(response));
-      // this.tempUser = JSON.parse(sessionStorage.getItem('userInfo'));
-      // console.log(this.tempUser.id);
-      sessionStorage.setItem('token', btoa(username + ':' + password));
-      this.router.navigate(['/items/list']);
-      //logoutnál false
-      this.stateService.updateValue({ isHeaderRefreshNeeded: true });
+        if(JSON.parse(JSON.stringify(response)).role === 'producer'){
+          sessionStorage.setItem('userInfo', JSON.stringify(response));
+          sessionStorage.setItem('token', btoa(username + ':' + password));
+          this.router.navigate(['/items/list']);
+        }else{
+          this.openWarning();
+        }
          
       },
-      error: () => {
-        alert(`Hibás jelszó vagy felhasználónév!`);
+      error: error => {
+        this.openWarning();
+        console.log(error);
       }
     }
 
     );
+  }
+
+  openWarning():void{
+    this.snackBar.open('Hibás jelszó vagy felhasználónév!', 'Ok', {
+      panelClass: ['snackbar-color-warn'],
+      duration: 10000
+    });
   }
 }

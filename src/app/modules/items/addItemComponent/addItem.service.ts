@@ -1,5 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Item } from '@app/shared/models/item.model';
 import { User } from '@app/shared/models/user.model';
 import { Observable } from 'rxjs';
 
@@ -8,14 +9,13 @@ import { Observable } from 'rxjs';
 })
 export class AddItemService {
 
-  private addUser = 'http://localhost:8080/api/auth/addCustomer';
+  private addItem = 'http://localhost:8080/api/admin/addProduct';
 
   constructor(private httpClient: HttpClient) { }
 
-  addNewUser(newUser: User): Observable<any> {
-    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa("user" + ':' + "password") });
-    console.log(newUser);
-    return this.httpClient.post<User>(this.addUser, newUser,{headers, responseType: 'text' as 'json'});    
+  addNewItem(newItem: Item): Observable<any> {
+    return this.httpClient.post<Item>(this.addItem, newItem,{ responseType: 'text' as 'json'}); 
+      
   }
   
 }

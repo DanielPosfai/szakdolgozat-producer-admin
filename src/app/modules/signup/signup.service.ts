@@ -6,16 +6,15 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class AddCustomerService {
+export class SignupService {
 
-  private addUser = 'http://localhost:8080/api/auth/addCustomer';
+  private addUser = 'http://localhost:8080/api/registerCustomer';
 
   constructor(private httpClient: HttpClient) { }
 
   addNewUser(newUser: User): Observable<any> {
-    const headers = new HttpHeaders({ Authorization: 'Basic ' + btoa("user" + ':' + "password") });
-    console.log(newUser);
-    return this.httpClient.post<User>(this.addUser, newUser,{headers, responseType: 'text' as 'json'});    
+
+    return this.httpClient.post<User>(this.addUser, newUser, { responseType: 'text' as 'json' });
   }
-  
+
 }
