@@ -15,7 +15,7 @@ export class SideMenuComponent{
 s
   public menuItems = [
     { tabname: 'Termékek', path: 'items/list'},
-    { tabname: 'Rendelések', path: 'orders/list' }
+    { tabname: 'Rendelés részletek', path: 'orderDetails/list' }
   ];
 
   constructor() {

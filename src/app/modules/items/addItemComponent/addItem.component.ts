@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConfirmedValidator } from '@app/shared/customValidator/confirmed.validator';
+import { Item } from '@app/shared/models/item.model';
 import { User } from '@app/shared/models/user.model';
 import { AuthUtil } from '@app/shared/utils/authorizationCheck.util';
+import { Observable, Subscriber } from 'rxjs';
 import { AddItemService } from './addItem.service';
 
 
@@ -18,65 +19,65 @@ export class AddItemComponent implements OnInit {
     public form: FormGroup;
     public isAuthenticated = AuthUtil.checkAuthorization();
 
+    public selectedFile: File;
+    public imagePreview: Observable<any>;
+    private base64image: string | ArrayBuffer;
+
     constructor(private service: AddItemService, private router: Router) { }
 
     ngOnInit() {
-
-        this.initForm();
+        if (this.isAuthenticated) {
+            this.initForm();
+        } else {
+            this.router.navigate(['/login']);
+        }
     }
 
     initForm(): void {
         this.form = new FormGroup({
-            lastName: new FormControl('', [
+            productname: new FormControl('', [
                 Validators.required
             ]),
-            firstName: new FormControl('', [
+            unit: new FormControl('', [
                 Validators.required
             ]),
-            userName: new FormControl('', [
+            price: new FormControl('', [
                 Validators.required
             ]),
-            phoneNumber: new FormControl('', [
+            category: new FormControl('', [
                 Validators.required,
-                Validators.pattern('^[0-9]*$'),
-                Validators.maxLength(11)
             ]),
-            email: new FormControl('', [
+            details: new FormControl('', [
                 Validators.required,
-                Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+[.]+[a-zA-Z]+$')
             ]),
-            password: new FormControl('', [
-                Validators.required,
-                Validators.minLength(8)
-            ]),
-            confirmPassword: new FormControl('', [])
+            imagePreview: new FormControl('', [
 
-        },{
-            validators: ConfirmedValidator.bind(this)
-            // ennek a formnak átadása
-        },)
+            ])
+
+        });
 
     }
 
-    onSubmit() {
+    onSubmit(): void {
 
-        // stop here if form is invalid
         if (this.form.invalid) {
 
             return;
         }
 
-        let newUser = new User;
-        newUser.firstname = this.form.get("lastName").value;
-        newUser.lastname = this.form.get("lastName").value;
-        newUser.username = this.form.get("userName").value;
-        newUser.phonenumber = this.form.get("phoneNumber").value;
-        newUser.email = this.form.get("email").value;
-        newUser.password = this.form.get("password").value;
-        newUser.role = "customer";
+        const newItem = new Item();
+        newItem.category = this.form.get("category").value;
+        newItem.productname = this.form.get("productname").value;
+        newItem.details = this.form.get("details").value;
+        newItem.price = this.form.get("price").value;
+        newItem.unit = this.form.get("unit").value;
 
-
-        this.service.addNewUser(newUser).subscribe({
+        const newUser = new User();
+        newUser.id = JSON.parse(sessionStorage.getItem('userInfo')).id
+        newItem.user = newUser;
+        newItem.image = this.base64image.toString();
+        console.log(newItem);
+        this.service.addNewItem(newItem).subscribe({
             next: response => {
 
                 if (response == 'user already exists') {
@@ -88,13 +89,45 @@ export class AddItemComponent implements OnInit {
                     alert("email alredy exist");
                     return;
                 }
-                this.router.navigate(['/customers/list']);
+                this.router.navigate(['/items/list']);
             },
             error: err => {
                 alert(err);
             }
-        }
-        );
+        });
 
+    }
+
+
+    onChange($event: Event) {
+        const file = ($event.target as HTMLInputElement).files[0];
+        this.selectedFile = ($event.target as HTMLInputElement).files[0];
+        this.convertToBase64(file);
+    }
+
+    convertToBase64(file: File) {
+        const observable = new Observable((subscriber: Subscriber<any>) => {
+            this.readFile(file, subscriber);
+        });
+        observable.subscribe((image) => {
+            this.imagePreview = image;
+            //console.log();
+        });
+
+    }
+
+    readFile(file: File, subscriber: Subscriber<any>) {
+        const filereader = new FileReader();
+        filereader.readAsDataURL(file);
+
+        filereader.onload = () => {
+            subscriber.next(filereader.result);
+            subscriber.complete();
+            this.base64image = filereader.result;
+        };
+        filereader.onerror = (error) => {
+            subscriber.error(error);
+            subscriber.complete();
+        };
     }
 }

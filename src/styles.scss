@@ -53,7 +53,7 @@ h1 {
   color: var(--green);
 }
 mat-drawer-container{
-  min-height: 500px; 
+  min-height: 800px; 
   mat-drawer {
     border-right: 3px solid var(--green)!important;
     span {
@@ -62,19 +62,29 @@ mat-drawer-container{
   }
   
 }
-.defaultStyle{
-  .mat-cell, .mat-header-cell{
-    border-bottom: 1px solid black;
+
+.defaultStyle {
+  .mat-cell,
+  .mat-header-cell {
     text-align: center !important;
   }
+  
 }
 
+.snackbar-color-warn {
+  background: #ffffff;
+  border: 3px solid red;
+  color: red;
 
+  .mat-simple-snackbar-action {
+    color: red;
+  }
 
+}
 
-
-
-
+.warning{
+  color:#dc3545;
+}
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';

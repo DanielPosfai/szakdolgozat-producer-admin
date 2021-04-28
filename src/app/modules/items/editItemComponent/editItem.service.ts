@@ -9,15 +9,15 @@ import { Observable } from 'rxjs';
 })
 export class EditItemService {
 
-  private editProductUrl = 'http://localhost:8080/api/auth/editCustomer/';
-  private getProductUrl = 'http://localhost:8080/api/auth/item/';
+  private editProductUrl = 'http://localhost:8080/api/admin/editProduct/';
+  private getProductUrl = 'http://localhost:8080/api/admin/item/';
 
   constructor(private httpClient: HttpClient) { }
 
-  editProduct(newUser: User, id: string): Observable<any> {
-    return this.httpClient.put<User>(this.editProductUrl + id, newUser, { responseType: 'text' as 'json' });
+  editProduct(item: Item): Observable<any> {
+    return this.httpClient.put<User>(this.editProductUrl, item, { responseType: 'text' as 'json' });
   }
-
+  
   getProduct(id: string): Observable<any> {
     return this.httpClient.get<Item>(this.getProductUrl + id);
   }

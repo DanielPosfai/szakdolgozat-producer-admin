@@ -2,17 +2,18 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { LoginComponent } from './login.component';
 import { LoginRouter } from './login.router';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
 
     imports: [
-        // ngif, ngfor miatt kell common
+
         CommonModule,
-        LoginRouter
-        // adott modul routere
+        LoginRouter,
+        MatSnackBarModule
+       
     ],
     declarations: [
-        // általam készített componensek jönnek ide
         LoginComponent
     ],
     exports: [

@@ -8,8 +8,10 @@ export class ItemsService {
 
   constructor(private httpService: HttpClient) { }
 
+  
   getItems() {
-    return this.httpService.get("http://localhost:8080/api/auth/items");
+    let tempId = JSON.parse(sessionStorage.getItem('userInfo'));
+    return this.httpService.get("http://localhost:8080/api/admin/myitems/"+tempId.id);
   }
 
 }
